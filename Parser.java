@@ -1,22 +1,29 @@
 public class Parser {
     
     public String command;
+    public BufferedReader in;
     
     // Opens the file and get ready to parse it
     public Parser(inFile) {
-        
+        in = new BufferReader(new FileReader(new File(inFile)));
     }
     
     // are there more commands in the file?
     public hasMoreCommands() {
-        
+        command = in.readLine();
+        if (command == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     
     // raed the next command form input
     // and makes it current command
     // called if hasMoreCommands() return true
     public advance() {
-        
+        return command;
     }
     
     /** return the type of VM command
