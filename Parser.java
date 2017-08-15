@@ -50,6 +50,7 @@ public class Parser {
         }
         
         // if there's no more commands in the file
+        in.close();
         return false;
     }
     
