@@ -10,7 +10,7 @@ public class Parser {
     
     // are there more commands in the file?
     public hasMoreCommands() {
-        command = in.readLine();
+        command = in.readLine().trim().toLowerCase();
         if (command == null) {
             return false;
         }
@@ -33,7 +33,9 @@ public class Parser {
      * 
      **/    
     public commandType() {
+        String type = command.split(" ")[0];
         
+        if (type ==)
     }
     
     /** returns first argument of the command
