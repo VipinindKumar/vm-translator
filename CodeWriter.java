@@ -16,12 +16,12 @@ public class CodeWriter {
     
     // write the assembly code for given 
     // arithmetic command
-    public writeArithmatic(String arth) {
+    public writeArithmetic(String arth) {
         
     }
     
     // write the translation of push/pop command
-    public writePushPop(String p) {
+    public writePushPop(String arg1, String arg2) {
         
     }
     

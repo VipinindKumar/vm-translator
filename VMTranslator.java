@@ -16,16 +16,25 @@ public class VMTranslator {
     public Parser parser;
     public CodeWriter code;
     
-    // take a filename, create parser and codeWriter and
+    // take a filename, create parser and
     // translate each vm commands in file 
     private void parse(in) {
         // construct a parser with the file
-        Parser parser = new Parser(in);
+        parser = new Parser(in);
         
         // iterate through each command
         while (hasMoreCommands()) {
             String command = parser.advance();
             
+            String ctype = parser.commandType();
+            
+            // artithmetic command
+            if (ctype.equals("C_ARITHMETIC")) {
+                code.writeArithmetic(parser.arg1());
+            }
+            else if (ctype.equals("C_PUSH") || ctype.equals("C_POP")) {
+                code.writePushPop(parser.arg1(), parser.arg2());
+            }
         }
     }
     
@@ -33,6 +42,9 @@ public class VMTranslator {
         
         try {
             File path = new File(args[0]);
+            
+            // create CodeWriter
+            code = new CodeWriter(args[0]);
             
             // argument could be a file or directory containing multiple files
             File[] files = path.listFiles();

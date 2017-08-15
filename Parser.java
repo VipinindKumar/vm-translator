@@ -1,5 +1,6 @@
 public class Parser {
     
+    public String command;
     
     // Opens the file and get ready to parse it
     public Parser(inFile) {
