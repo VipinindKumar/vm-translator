@@ -13,10 +13,20 @@ import java.io.*;
 
 public class VMTranslator {
     
+    public Parser parser;
+    public CodeWriter code;
+    
     // take a filename, create parser and codeWriter and
     // translate each vm commands in file 
     private void parse(in) {
-        !!!
+        // construct a parser with the file
+        Parser parser = new Parser(in);
+        
+        // iterate through each command
+        while (hasMoreCommands()) {
+            String command = parser.advance();
+            
+        }
     }
     
     public static void main(String[] args) {
