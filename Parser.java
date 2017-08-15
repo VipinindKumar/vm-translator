@@ -18,15 +18,39 @@ public class Parser {
     
     // are there more commands in the file?
     public hasMoreCommands() {
-        command = in.readLine().trim().toLowerCase();
-        type = command.split(" ")[0];
-        
-        if (command == null) {
-            return false;
-        }
-        else {
+        while (command = in.readLine() != null) {
+            type = command.trim().split(" ")[0];
+            
+            
+            // check for one line and multi line comments and skip past them
+            command = command.trim().toLowerCase();
+            
+            // Single line comments
+            if (command.charAt(0) == '/' && command.charAt(1) == '/') {
+                continue;
+            }
+            
+            // Multi line comments
+            else if (command.charAt(0) == '/' && command.charAt(1) == '*') {
+                while (command = in.readLine() != null) {
+                    if (command.charAt(command.length() - 1)) == '/' && command.charAt(command.length() - 2)) == '*') {
+                        break;
+                    }
+                    continue;
+                }
+                continue;
+            }
+            
+            
+            // trim end of line comments away
+            if (command.contains("//")) {
+                command = command.split("//")[0];
+            }
             return true;
         }
+        
+        // if there's no more commands in the file
+        return false;
     }
     
     // raed the next command form input
