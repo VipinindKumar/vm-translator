@@ -1,6 +1,14 @@
+/**Handles the parsing of a single .vm file, and 
+ * encapsulates access to the input code. 
+ * It reads VM commands, parses them, and
+ * provides convenient access to their components
+ * 
+ **/
+
 public class Parser {
     
     public String command;
+    public String type;
     public BufferedReader in;
     
     // Opens the file and get ready to parse it
@@ -11,6 +19,8 @@ public class Parser {
     // are there more commands in the file?
     public hasMoreCommands() {
         command = in.readLine().trim().toLowerCase();
+        type = command.split(" ")[0];
+        
         if (command == null) {
             return false;
         }
@@ -33,9 +43,10 @@ public class Parser {
      * 
      **/    
     public commandType() {
-        String type = command.split(" ")[0];
-        
-        if (type ==)
+        if (type =="push") type = "C_PUSH";
+        else if (type == "pop") type = "C_POP";
+        else type = "C_ARITHMETIC";
+        return type;
     }
     
     /** returns first argument of the command
@@ -45,7 +56,12 @@ public class Parser {
      * 
      **/
     public arg1() {
-        
+        if (type == "C_ARITHMETIC") {
+            return command;
+        }
+        else if (type == "C_PUSH" || type = "C_POP") {
+            return command.split(" ")[1];
+        }
     }
     
     /** Returns second argument of the command
@@ -55,6 +71,6 @@ public class Parser {
      * 
      **/
     public arg2() {
-        
+        return command.split(" ")[2];
     }
 }
