@@ -22,12 +22,12 @@ public class CodeWriter {
     }
     
     // write the translation of push/pop command
-    public writePushPop(String arg1, String arg2) {
+    public writePushPop(String type, String arg1, String arg2) {
         
     }
     
     // close the output file
     public close() {
-        
+        out.close();
     }
 }
