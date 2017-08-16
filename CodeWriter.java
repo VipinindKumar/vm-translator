@@ -1,11 +1,12 @@
 public class CodeWriter {
     
+    public BufferedWriter out;
     
     /** Open the output file, and 
      * get ready to write
      **/
     public CodeWriter(outFile) {
-        
+        out = new BufferedWriter(new FileWriter(new File(outFile)));
     }
     
     // Informs the codeWriter that
