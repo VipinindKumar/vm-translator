@@ -28,7 +28,31 @@ public class CodeWriter {
     
     // write the translation of push/pop command
     public writePushPop(String type, String arg1, int index) {
-        
+        // Pop command
+        if (type == "C_POP") {
+            String seg;
+            
+            // store the appropriate segment
+            if (arg1 == "argument") {
+                
+            }
+            else if (arg1 == "local") {
+                
+            }
+            else if (arg1 == "this") {
+                
+            }
+            else if (arg1 == "that") {
+                
+            }
+            else if (arg1 == "temp") {
+                
+            }
+        }
+        // Push command
+        else {
+            
+        }
     }
     
     // close the output file
