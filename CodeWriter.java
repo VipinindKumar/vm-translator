@@ -33,20 +33,21 @@ public class CodeWriter {
             String seg;
             
             // store the appropriate segment
+            // @segment
             if (arg1 == "argument") {
-                
+                seg = "ARG";
             }
             else if (arg1 == "local") {
-                
+                seg = "LCL";
             }
             else if (arg1 == "this") {
-                
+                seg = "THIS";
             }
             else if (arg1 == "that") {
-                
+                seg = "THAT";
             }
             else if (arg1 == "temp") {
-                
+                seg = "5";
             }
         }
         // Push command
