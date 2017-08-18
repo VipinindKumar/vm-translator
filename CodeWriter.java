@@ -28,27 +28,54 @@ public class CodeWriter {
     
     // write the translation of push/pop command
     public writePushPop(String type, String arg1, int index) {
+        
+        String seg;
+        
+        // store the appropriate segment
+        // @segment
+        if (arg1 == "argument") {
+            seg = "ARG";
+        }
+        else if (arg1 == "local") {
+            seg = "LCL";
+        }
+        else if (arg1 == "this") {
+            seg = "THIS";
+        }
+        else if (arg1 == "that") {
+            seg = "THAT";
+        }
+        else if (arg1 == "temp") {
+            seg = "5";
+        }
+        
+        // create assembly code for pseudocode
+        // addr = LCL + i
+        if (!(arg1 == "constant" || arg1 == "static" || arg1 == "pointer")) {
+            
+            // @LCL
+            out.write("@" + seg);
+            out.newLine();
+            // D = A
+            out.write("D = A");
+            out.newLine();
+            // @i
+            out.write("@" + index);
+            out.newLine();
+            // D = D + A
+            out.write("D = D + A");
+            out.newLine();
+            // @addr
+            out.write("@addr");
+            out.newLine();
+            // M = D
+            out.write("M = D");
+            out.newLine();
+        }
+        
         // Pop command
         if (type == "C_POP") {
-            String seg;
             
-            // store the appropriate segment
-            // @segment
-            if (arg1 == "argument") {
-                seg = "ARG";
-            }
-            else if (arg1 == "local") {
-                seg = "LCL";
-            }
-            else if (arg1 == "this") {
-                seg = "THIS";
-            }
-            else if (arg1 == "that") {
-                seg = "THAT";
-            }
-            else if (arg1 == "temp") {
-                seg = "5";
-            }
         }
         // Push command
         else {

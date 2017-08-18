@@ -33,7 +33,7 @@ public class VMTranslator {
                 code.writeArithmetic(parser.arg1());
             }
             else if (ctype.equals("C_PUSH") || ctype.equals("C_POP")) {
-                code.writePushPop(ctype, parser.arg1(), Integer.parseInt(parser.arg2()));
+                code.writePushPop(ctype, parser.arg1(), parser.arg2());
             }
         }
     }
