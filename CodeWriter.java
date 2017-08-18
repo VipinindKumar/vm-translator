@@ -51,13 +51,14 @@ public class CodeWriter {
         
         // create assembly code for pseudocode
         // addr = LCL + i
+        // !!! LCL and like invoked in what way???
         if (!(arg1 == "constant" || arg1 == "static" || arg1 == "pointer")) {
             
             // @LCL
             out.write("@" + seg);
             out.newLine();
             // D = A
-            out.write("D = A");
+            out.write("D = M");
             out.newLine();
             // @i
             out.write("@" + index);
@@ -74,8 +75,43 @@ public class CodeWriter {
         }
         
         // Pop command
+        // SP--
+        // *addr = *SP 
         if (type == "C_POP") {
+            //@ SP--
+            out.write("@SP");
+            out.newLine();
+            out.write("M = M - 1");
+            out.newLine();
             
+            // *addr = *SP
+            out.write("A = M");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            
+            if (arg1 == "pointer") {
+                if (index == "0") {
+                    out.write("@THIS");
+                }
+                else {
+                    out.write("@THAT");
+                }
+                out.newLine();
+            }
+            else if (arg1 == "static") {
+                out.write("@" + file + "." + index);
+                out.newLine();
+            }
+            else {
+                out.write("@addr");
+                out.newLine();
+                out.write("A = M");
+                out.newLine();
+            }
+            
+            out.write("M = D");
+            out.newLine();
         }
         // Push command
         else {
