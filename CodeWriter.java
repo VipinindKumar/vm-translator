@@ -113,9 +113,55 @@ public class CodeWriter {
             out.write("M = D");
             out.newLine();
         }
+        
+        
         // Push command
+        // *SP = *addr
+        // SP++
         else {
+            //eg: A = M or @Foo.5 or @THIS
+            if (arg1 == "pointer") {
+                if (index == "0") {
+                    out.write("@THIS");
+                }
+                else {
+                    out.write("@THAT");
+                }
+                out.newLine();
+            }
+            else if (arg1 == "static") {
+                out.write("@" + file + "." + index);
+                out.newLine();
+            }
+            else {
+                out.write("A = M");
+                out.newLine();
+            }
             
+            // D = M
+            out.write("D = M");
+            out.newLine();
+            
+            // @SP
+            out.write("@SP");
+            out.newLine();
+            
+            // A = M
+            out.write("A = M");
+            out.newLine();
+            
+            // M = D
+            out.write("M = D");
+            out.newLine();
+            
+            // SP++
+            // @SP
+            out.write("@SP");
+            out.newLine();
+            
+            // M = M + 1
+            out.write("M = M + 1");
+            out.newLine();
         }
     }
     
