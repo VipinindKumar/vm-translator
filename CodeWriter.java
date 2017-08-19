@@ -24,6 +24,63 @@ public class CodeWriter {
     // arithmetic command
     public writeArithmetic(String arth) {
         
+        // same for every arithmetic command,
+        // y
+        // SP--
+        out.write("@SP");
+        out.newLine();
+        out.write("M = M - 1");
+        out.newLine();
+        // *SP
+        out.write("A = M");
+        out.newLine();
+        out.write("D = M");
+        out.newLine();
+        
+        // uses two variables from stack to perform the arithmetic
+        // x
+        if (!(arth == "not" && arth == "neg")) {
+            // SP--
+            out.write("@SP");
+            out.newLine();
+            out.write("M = M - 1");
+            out.newLine();
+            // *SP
+            out.write("A = M");
+            out.newLine();
+        }
+        
+        
+        // different arth specific function coommands
+        if (arth == "add") {
+            out.write("M = M + D");
+            out.newLine();
+        }
+        else if (arth == "sub") {
+            out.write("M = M - D");
+            out.newLine();
+        }
+        else if (arth == "eq") {
+            
+        }
+        else if (arth == "gt") {
+            
+        }
+        else if (arth == "lt") {
+            
+        }
+        else if (arth == "and") {
+            
+        }
+        else if (arth == "or") {
+            
+        }
+        else if (arth == "neg") {
+            
+        }
+        else if (arth == "not") {
+            
+        }
     }
     
     // write the translation of push/pop command
