@@ -60,6 +60,14 @@ public class CodeWriter {
             out.write("M = M - D");
             out.newLine();
         }
+        else if (arth == "and") {
+            out.write("M = D & M");
+            out.newLine();
+        }
+        else if (arth == "or") {
+            out.write("M = D | M");
+            out.newLine();
+        }
         else if (arth == "eq") {
             
         }
@@ -67,12 +75,6 @@ public class CodeWriter {
             
         }
         else if (arth == "lt") {
-            
-        }
-        else if (arth == "and") {
-            
-        }
-        else if (arth == "or") {
             
         }
         else if (arth == "neg") {
