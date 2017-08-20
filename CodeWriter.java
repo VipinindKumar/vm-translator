@@ -2,6 +2,7 @@ public class CodeWriter {
     
     public BufferedWriter out;
     public String file;
+    public int i = 0;
     
     /** Open the output file, and 
      * get ready to write
@@ -53,7 +54,7 @@ public class CodeWriter {
         
         // different arth specific function coommands
         if (arth == "add") {
-            out.write("M = M + D");
+            out.write("M = D + M");
             out.newLine();
         }
         else if (arth == "sub") {
@@ -68,14 +69,16 @@ public class CodeWriter {
             out.write("M = D | M");
             out.newLine();
         }
-        else if (arth == "eq") {
-            
-        }
-        else if (arth == "gt") {
-            
-        }
-        else if (arth == "lt") {
-            
+        // these operations involve labels for if conditionals
+        else if (arth == "eq" || arth == "gt" || arth == "lt") {
+            // D = y - x
+            out.write("D = D - M")
+            out.newLine();
+            // A-instruction referencing a label
+            // i used to create a new Label with every new if conditional
+            out.write("IF_" + Integer.toString(i));
+            out.newLine();
+            i++;
         }
         else if (arth == "neg") {
             
