@@ -1,3 +1,12 @@
+/**output assembly code for VMTranslator.java
+ * 
+ * take the file name to ouput to and get ready to write to it,
+ * use writeArithmetic() and writePushPop() to translate,
+ * arithmetic and push/pop commands from the VM file.
+ **/
+
+import java.io.*;
+
 public class CodeWriter {
     
     public BufferedWriter out;
@@ -7,40 +16,31 @@ public class CodeWriter {
     /** Open the output file, and 
      * get ready to write
      **/
-    public CodeWriter(outFile) {
-        out = new BufferedWriter(new FileWriter(new File(outFile)));
-        if (outFile.contains(".vm") {
+    public CodeWriter (String outFile) {
+        try {
+            out = new BufferedWriter(new FileWriter(new File(outFile)));
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        if (outFile.contains(".vm")) {
             outFile = outFile.split(".vm")[0];
         }
-        setFileName(outFile);
+        file = outFile;
     }
     
     // Informs the codeWriter that
     // the translation of a new file has started
-    public setFileName(fileName) {
+    public void setFileName (String fileName) {
         file = fileName;
     }
     
     // write the assembly code for given 
     // arithmetic command
-    public writeArithmetic(String arth) {
-        
-        // same for every arithmetic command,
-        // y
-        // SP--
-        out.write("@SP");
-        out.newLine();
-        out.write("M = M - 1");
-        out.newLine();
-        // *SP
-        out.write("A = M");
-        out.newLine();
-        out.write("D = M");
-        out.newLine();
-        
-        // uses two variables from stack to perform the arithmetic
-        // x
-        if (!(arth == "not" && arth == "neg")) {
+    public void writeArithmetic (String arth) {
+        try {
+            // same for every arithmetic command,
+            // y
             // SP--
             out.write("@SP");
             out.newLine();
@@ -49,92 +49,111 @@ public class CodeWriter {
             // *SP
             out.write("A = M");
             out.newLine();
-        }
-        
-        
-        // different arth specific function coommands
-        if (arth == "add") {
-            out.write("M = D + M");
+            out.write("D = M");
             out.newLine();
-        }
-        else if (arth == "sub") {
-            out.write("M = M - D");
-            out.newLine();
-        }
-        else if (arth == "and") {
-            out.write("M = D & M");
-            out.newLine();
-        }
-        else if (arth == "or") {
-            out.write("M = D | M");
-            out.newLine();
-        }
-        else if (arth == "neg") {
-            out.write("M = -D");
-            out.newLine();
-        }
-        else if (arth == "not") {
-            out.write("M = !D");
-            out.newLine();
-        }
-        // these operations involve labels for if conditionals
-        else if (arth == "eq" || arth == "gt" || arth == "lt") {
-            // D = y - x
-            out.write("D = D - M");
-            out.newLine();
-            // A-instruction referencing a label
-            // i used to create a new Label with every new if conditional
-            out.write("IF_" + Integer.toString(i));
-            out.newLine();
-            i++;
             
-            // C-instruction with different jump statements
-            // if 'D == 0' goto IF_i
-            if (arth == "eq") {
-                out.write("D;JEQ");
+            // uses two variables from stack to perform the arithmetic
+            // x
+            if (!(arth == "not" && arth == "neg")) {
+                // SP--
+                out.write("@SP");
                 out.newLine();
-            }
-            else if (arth == "gt") {
-                out.write("D;JLT");
+                out.write("M = M - 1");
                 out.newLine();
-            }
-            else if (arth == "lt") {
-                out.write("D;JGT");
+                // *SP
+                out.write("A = M");
                 out.newLine();
             }
             
-            // similar part of the assembly code for the commands
-            // 'else false' part
+            
+            // different arth specific function coommands
+            if (arth == "add") {
+                out.write("M = D + M");
+                out.newLine();
+            }
+            else if (arth == "sub") {
+                out.write("M = M - D");
+                out.newLine();
+            }
+            else if (arth == "and") {
+                out.write("M = D & M");
+                out.newLine();
+            }
+            else if (arth == "or") {
+                out.write("M = D | M");
+                out.newLine();
+            }
+            else if (arth == "neg") {
+                out.write("M = -D");
+                out.newLine();
+            }
+            else if (arth == "not") {
+                out.write("M = !D");
+                out.newLine();
+            }
+            // these operations involve labels for if conditionals
+            else if (arth == "eq" || arth == "gt" || arth == "lt") {
+                // D = y - x
+                out.write("D = D - M");
+                out.newLine();
+                // A-instruction referencing a label
+                // i used to create a new Label with every new if conditional
+                out.write("IF_" + Integer.toString(i));
+                out.newLine();
+                i++;
+                
+                // C-instruction with different jump statements
+                // if 'D == 0' goto IF_i
+                if (arth == "eq") {
+                    out.write("D;JEQ");
+                    out.newLine();
+                }
+                else if (arth == "gt") {
+                    out.write("D;JLT");
+                    out.newLine();
+                }
+                else if (arth == "lt") {
+                    out.write("D;JGT");
+                    out.newLine();
+                }
+                
+                // similar part of the assembly code for the commands
+                // 'else false' part
+                out.write("@SP");
+                out.newLine();
+                out.write("A = M");
+                out.newLine();
+                out.write("M = 0");
+                out.newLine();
+                
+                // 'true' part
+                out.write("(IF_" + Integer.toString(i - 1) + ")");
+                out.newLine();
+                out.write("@SP");
+                out.newLine();
+                out.write("A = M");
+                out.newLine();
+                out.write("M = -1");
+                out.newLine();
+            }
+            
+            // SP++, similar for all commands
             out.write("@SP");
             out.newLine();
-            out.write("A = M");
-            out.newLine();
-            out.write("M = 0");
+            out.write("M = M + 1");
             out.newLine();
             
-            // 'true' part
-            out.write("(IF_" + Integer.toString(i - 1) + ")");
-            out.newLine();
-            out.write("@SP");
-            out.newLine();
-            out.write("A = M");
-            out.newLine();
-            out.write("M = -1");
-            out.newLine();
         }
-        
-        // SP++, similar for all commands
-        out.write("@SP");
-        out.newLine();
-        out.write("M = M + 1");
-        out.newLine();
+        catch (IOException e) {
+            System.out.println(e);
+        }
         
     }
     
     // write the translation of push/pop command
-    public writePushPop(String type, String arg1, int index) {
+    public void writePushPop (String type, String arg1, String index) {
         
-        String seg;
+        String seg = "";
         
         // store the appropriate segment
         // @segment
@@ -154,124 +173,135 @@ public class CodeWriter {
             seg = "5";
         }
         
-        // create assembly code for pseudocode
-        // addr = LCL + i
-        // !!! LCL and like invoked in what way???
-        if (!(arg1 == "constant" || arg1 == "static" || arg1 == "pointer")) {
-            
-            // @LCL
-            out.write("@" + seg);
-            out.newLine();
-            // D = A
-            out.write("D = M");
-            out.newLine();
-            // @i
-            out.write("@" + index);
-            out.newLine();
-            // D = D + A
-            out.write("D = D + A");
-            out.newLine();
-            // @addr
-            out.write("@addr");
-            out.newLine();
-            // M = D
-            out.write("M = D");
-            out.newLine();
-        }
-        
-        // Pop command
-        // SP--
-        // *addr = *SP 
-        if (type == "C_POP") {
-            //@ SP--
-            out.write("@SP");
-            out.newLine();
-            out.write("M = M - 1");
-            out.newLine();
-            
-            // *addr = *SP
-            out.write("A = M");
-            out.newLine();
-            out.write("D = M");
-            out.newLine();
-            
-            if (arg1 == "pointer") {
-                if (index == "0") {
-                    out.write("@THIS");
-                }
-                else {
-                    out.write("@THAT");
-                }
+        try {
+            // create assembly code for pseudocode
+            // addr = LCL + i
+            // !!! LCL and like invoked in what way???
+            if (!(arg1 == "constant" || arg1 == "static" || arg1 == "pointer")) {
+                
+                // @LCL
+                out.write("@" + seg);
                 out.newLine();
-            }
-            else if (arg1 == "static") {
-                out.write("@" + file + "." + index);
+                // D = A
+                out.write("D = M");
                 out.newLine();
-            }
-            else {
+                // @i
+                out.write("@" + index);
+                out.newLine();
+                // D = D + A
+                out.write("D = D + A");
+                out.newLine();
+                // @addr
                 out.write("@addr");
                 out.newLine();
-                out.write("A = M");
+                // M = D
+                out.write("M = D");
                 out.newLine();
             }
             
-            out.write("M = D");
-            out.newLine();
-        }
-        
-        
-        // Push command
-        // *SP = *addr
-        // SP++
-        else {
-            //eg: A = M or @Foo.5 or @THIS
-            if (arg1 == "pointer") {
-                if (index == "0") {
-                    out.write("@THIS");
+            // Pop command
+            // SP--
+            // *addr = *SP 
+            if (type == "C_POP") {
+                //@ SP--
+                out.write("@SP");
+                out.newLine();
+                out.write("M = M - 1");
+                out.newLine();
+                
+                // *addr = *SP
+                out.write("A = M");
+                out.newLine();
+                out.write("D = M");
+                out.newLine();
+                
+                if (arg1 == "pointer") {
+                    if (index == "0") {
+                        out.write("@THIS");
+                    }
+                    else {
+                        out.write("@THAT");
+                    }
+                    out.newLine();
+                }
+                else if (arg1 == "static") {
+                    out.write("@" + file + "." + index);
+                    out.newLine();
                 }
                 else {
-                    out.write("@THAT");
+                    out.write("@addr");
+                    out.newLine();
+                    out.write("A = M");
+                    out.newLine();
                 }
+                
+                out.write("M = D");
                 out.newLine();
             }
-            else if (arg1 == "static") {
-                out.write("@" + file + "." + index);
-                out.newLine();
-            }
+            
+            
+            // Push command
+            // *SP = *addr
+            // SP++
             else {
+                //eg: A = M or @Foo.5 or @THIS
+                if (arg1 == "pointer") {
+                    if (index == "0") {
+                        out.write("@THIS");
+                    }
+                    else {
+                        out.write("@THAT");
+                    }
+                    out.newLine();
+                }
+                else if (arg1 == "static") {
+                    out.write("@" + file + "." + index);
+                    out.newLine();
+                }
+                else {
+                    out.write("A = M");
+                    out.newLine();
+                }
+                
+                // D = M
+                out.write("D = M");
+                out.newLine();
+                
+                // @SP
+                out.write("@SP");
+                out.newLine();
+                
+                // A = M
                 out.write("A = M");
                 out.newLine();
+                
+                // M = D
+                out.write("M = D");
+                out.newLine();
+                
+                // SP++
+                // @SP
+                out.write("@SP");
+                out.newLine();
+                
+                // M = M + 1
+                out.write("M = M + 1");
+                out.newLine();
             }
-            
-            // D = M
-            out.write("D = M");
-            out.newLine();
-            
-            // @SP
-            out.write("@SP");
-            out.newLine();
-            
-            // A = M
-            out.write("A = M");
-            out.newLine();
-            
-            // M = D
-            out.write("M = D");
-            out.newLine();
-            
-            // SP++
-            // @SP
-            out.write("@SP");
-            out.newLine();
-            
-            // M = M + 1
-            out.write("M = M + 1");
-            out.newLine();
         }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        
     }
     
     // close the output file
-    public close() {
-        out.close();
+    public void close () {
+        try {
+            out.close();
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
     }
 }
