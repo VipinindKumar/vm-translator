@@ -69,6 +69,14 @@ public class CodeWriter {
             out.write("M = D | M");
             out.newLine();
         }
+        else if (arth == "neg") {
+            out.write("M = -D");
+            out.newLine();
+        }
+        else if (arth == "not") {
+            out.write("M = !D");
+            out.newLine();
+        }
         // these operations involve labels for if conditionals
         else if (arth == "eq" || arth == "gt" || arth == "lt") {
             // D = y - x
@@ -114,12 +122,13 @@ public class CodeWriter {
             out.write("M = -1");
             out.newLine();
         }
-        else if (arth == "neg") {
-            
-        }
-        else if (arth == "not") {
-            
-        }
+        
+        // SP++, similar for all commands
+        out.write("@SP");
+        out.newLine();
+        out.write("M = M + 1");
+        out.newLine();
+        
     }
     
     // write the translation of push/pop command
