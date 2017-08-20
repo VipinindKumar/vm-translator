@@ -79,6 +79,23 @@ public class CodeWriter {
             out.write("IF_" + Integer.toString(i));
             out.newLine();
             i++;
+            
+            // C-instruction with different jump statements
+            // if 'D == 0' goto IF_i
+            if (arth == "eq") {
+                out.write("D;JEQ");
+                out.newLine();
+            }
+            else if (arth == "gt") {
+                out.write("D;JLT");
+                out.newLine();
+            }
+            else if (arth == "lt") {
+                out.write("D;JGT");
+                out.newLine();
+            }
+            
+            
         }
         else if (arth == "neg") {
             
