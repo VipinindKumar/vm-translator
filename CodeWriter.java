@@ -2,7 +2,7 @@ public class CodeWriter {
     
     public BufferedWriter out;
     public String file;
-    public int i = 0;
+    public int i = 1;
     
     /** Open the output file, and 
      * get ready to write
@@ -72,7 +72,7 @@ public class CodeWriter {
         // these operations involve labels for if conditionals
         else if (arth == "eq" || arth == "gt" || arth == "lt") {
             // D = y - x
-            out.write("D = D - M")
+            out.write("D = D - M");
             out.newLine();
             // A-instruction referencing a label
             // i used to create a new Label with every new if conditional
@@ -95,7 +95,24 @@ public class CodeWriter {
                 out.newLine();
             }
             
+            // similar part of the assembly code for the commands
+            // 'else false' part
+            out.write("@SP");
+            out.newLine();
+            out.write("A = M");
+            out.newLine();
+            out.write("M = 0");
+            out.newLine();
             
+            // 'true' part
+            out.write("(IF_" + Integer.toString(i - 1) + ")");
+            out.newLine();
+            out.write("@SP");
+            out.newLine();
+            out.write("A = M");
+            out.newLine();
+            out.write("M = -1");
+            out.newLine();
         }
         else if (arth == "neg") {
             
