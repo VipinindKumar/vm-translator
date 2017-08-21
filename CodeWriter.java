@@ -261,6 +261,10 @@ public class CodeWriter {
                     out.write("@" + file + "." + index);
                     out.newLine();
                 }
+                else if (arg1.equals("constant")) {
+                    out.write("@" + index);
+                    out.newLine();
+                }
                 else {
                     out.write("A = M");
                     out.newLine();

@@ -58,5 +58,7 @@ public class VMTranslator {
         else {
             vmt.parse(path);
         }
+        
+        vmt.code.close();
     }
 }
