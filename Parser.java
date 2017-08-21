@@ -27,6 +27,10 @@ public class Parser {
     public boolean hasMoreCommands() {
         try {
             while ((command = in.readLine()) != null) {
+                // skip empty lines
+                if (command.isEmpty()) {
+                    continue;
+                }
                 type = command.trim().split(" ")[0];
                 
                 

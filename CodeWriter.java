@@ -101,7 +101,7 @@ public class CodeWriter {
                 out.newLine();
                 // A-instruction referencing a label
                 // i used to create a new Label with every new if conditional
-                out.write("IF_" + Integer.toString(i));
+                out.write("@IF" + Integer.toString(i));
                 out.newLine();
                 i++;
                 
@@ -130,7 +130,7 @@ public class CodeWriter {
                 out.newLine();
                 
                 // 'true' part
-                out.write("(IF_" + Integer.toString(i - 1) + ")");
+                out.write("(IF" + Integer.toString(i - 1) + ")");
                 out.newLine();
                 out.write("@SP");
                 out.newLine();
@@ -256,23 +256,35 @@ public class CodeWriter {
                         out.write("@THAT");
                     }
                     out.newLine();
+                
+                    // D = A
+                    out.write("D = A");
+                    out.newLine();
                 }
                 else if (arg1.equals("static")) {
                     out.write("@" + file + "." + index);
+                    out.newLine();
+                
+                    // D = A
+                    out.write("D = A");
                     out.newLine();
                 }
                 else if (arg1.equals("constant")) {
                     out.write("@" + index);
                     out.newLine();
+                    
+                    // D = A
+                    out.write("D = A");
+                    out.newLine();
                 }
                 else {
                     out.write("A = M");
                     out.newLine();
-                }
                 
-                // D = M
-                out.write("D = M");
-                out.newLine();
+                    // D = M
+                    out.write("D = M");
+                    out.newLine();
+                }
                 
                 // @SP
                 out.write("@SP");
