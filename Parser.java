@@ -5,6 +5,8 @@
  * 
  **/
 
+import java.io.*;
+
 public class Parser {
     
     public String command;
@@ -12,52 +14,63 @@ public class Parser {
     public BufferedReader in;
     
     // Opens the file and get ready to parse it
-    public Parser(inFile) {
-        in = new BufferReader(new FileReader(new File(inFile)));
+    public Parser(File inFile) {
+        try {
+            in = new BufferedReader(new FileReader(inFile));
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
     }
     
     // are there more commands in the file?
-    public hasMoreCommands() {
-        while (command = in.readLine() != null) {
-            type = command.trim().split(" ")[0];
-            
-            
-            // check for one line and multi line comments and skip past them
-            command = command.trim().toLowerCase();
-            
-            // Single line comments
-            if (command.charAt(0) == '/' && command.charAt(1) == '/') {
-                continue;
-            }
-            
-            // Multi line comments
-            else if (command.charAt(0) == '/' && command.charAt(1) == '*') {
-                while (command = in.readLine() != null) {
-                    if (command.charAt(command.length() - 1)) == '/' && command.charAt(command.length() - 2)) == '*') {
-                        break;
+    public boolean hasMoreCommands() {
+        try {
+            while ((command = in.readLine()) != null) {
+                type = command.trim().split(" ")[0];
+                
+                
+                // check for one line and multi line comments and skip past them
+                command = command.trim().toLowerCase();
+                
+                // Single line comments
+                if (command.charAt(0) == '/' && command.charAt(1) == '/') {
+                    continue;
+                }
+                
+                // Multi line comments
+                else if (command.charAt(0) == '/' && command.charAt(1) == '*') {
+                    while ((command = in.readLine()) != null) {
+                        int len = command.length();
+                        if (command.charAt(len - 1) == '/' && command.charAt(len - 2) == '*') {
+                            break;
+                        }
+                        continue;
                     }
                     continue;
                 }
-                continue;
+                
+                
+                // trim end of line comments away
+                if (command.contains("//")) {
+                    command = command.split("//")[0];
+                }
+                return true;
             }
             
-            
-            // trim end of line comments away
-            if (command.contains("//")) {
-                command = command.split("//")[0];
-            }
-            return true;
+            // if there's no more commands in the file
+            in.close();
         }
-        
-        // if there's no more commands in the file
-        in.close();
+        catch (IOException e) {
+            System.out.println(e);
+        }
         return false;
     }
     
     // raed the next command form input
     // and makes it current command
     // called if hasMoreCommands() return true
-    public advance() {
+    public String advance() {
         return command;
     }
     
@@ -67,10 +80,16 @@ public class Parser {
      * C_IF, C_FUNCTION, C_RETURN, C_CALL
      * 
      **/    
-    public commandType() {
-        if (type =="push") type = "C_PUSH";
-        else if (type == "pop") type = "C_POP";
-        else type = "C_ARITHMETIC";
+    public String commandType() {
+        if (type.equals("push")) {
+            type = "C_PUSH";
+        }
+        else if (type.equals("pop")) {
+            type = "C_POP";
+        }
+        else {
+            type = "C_ARITHMETIC";
+        }
         return type;
     }
     
@@ -80,12 +99,15 @@ public class Parser {
      * Should not be called if command is C_RETURN
      * 
      **/
-    public arg1() {
-        if (type == "C_ARITHMETIC") {
+    public String arg1() {
+        if (type.equals("C_ARITHMETIC")) {
             return command;
         }
-        else if (type == "C_PUSH" || type = "C_POP") {
+        else if (type.equals("C_PUSH") || type.equals("C_POP")) {
             return command.split(" ")[1];
+        }
+        else {
+            return null;
         }
     }
     
@@ -95,7 +117,7 @@ public class Parser {
      * C_PUSH, C_POP, C_FUNCTION, C_CALL
      * 
      **/
-    public arg2() {
+    public String arg2() {
         return command.split(" ")[2];
     }
 }

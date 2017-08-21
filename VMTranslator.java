@@ -18,12 +18,12 @@ public class VMTranslator {
     
     // take a filename, create parser and
     // translate each vm commands in file 
-    private void parse(in) {
+    private void parse(File in) {
         // construct a parser with the file
         parser = new Parser(in);
         
         // iterate through each command
-        while (hasMoreCommands()) {
+        while (parser.hasMoreCommands()) {
             String command = parser.advance();
             
             String ctype = parser.commandType();
@@ -40,27 +40,23 @@ public class VMTranslator {
     
     public static void main(String[] args) {
         
-        try {
-            File path = new File(args[0]);
-            
-            // create CodeWriter
-            code = new CodeWriter(args[0]);
-            
-            // argument could be a file or directory containing multiple files
-            File[] files = path.listFiles();
-            // if path is a directory
-            if (files != null) {
-                for (File file : files) {
-                  parse(file);
-                }
-            }
-            // single file
-            else {
-                parse(file);
+        File path = new File(args[0]);
+        
+        VMTranslator vmt = new VMTranslator();
+        // create CodeWriter
+        vmt.code = new CodeWriter(args[0]);
+        
+        // argument could be a file or directory containing multiple files
+        File[] files = path.listFiles();
+        // if path is a directory
+        if (files != null) {
+            for (File file : files) {
+              vmt.parse(file);
             }
         }
-        catch (IOException e) {
-            System.out.println(e);
+        // single file
+        else {
+            vmt.parse(path);
         }
     }
 }

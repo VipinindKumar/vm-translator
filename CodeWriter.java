@@ -17,16 +17,19 @@ public class CodeWriter {
      * get ready to write
      **/
     public CodeWriter (String outFile) {
+        if (outFile.contains(".vm")) {
+            outFile = outFile.split(".vm")[0];
+        }
+        file = outFile;
+        
+        outFile = outFile + ".asm";
+        
         try {
             out = new BufferedWriter(new FileWriter(new File(outFile)));
         }
         catch (IOException e) {
             System.out.println(e);
         }
-        if (outFile.contains(".vm")) {
-            outFile = outFile.split(".vm")[0];
-        }
-        file = outFile;
     }
     
     // Informs the codeWriter that
@@ -54,7 +57,7 @@ public class CodeWriter {
             
             // uses two variables from stack to perform the arithmetic
             // x
-            if (!(arth == "not" && arth == "neg")) {
+            if (!(arth.equals("not") && arth.equals("neg"))) {
                 // SP--
                 out.write("@SP");
                 out.newLine();
@@ -67,32 +70,32 @@ public class CodeWriter {
             
             
             // different arth specific function coommands
-            if (arth == "add") {
+            if (arth.equals("add")) {
                 out.write("M = D + M");
                 out.newLine();
             }
-            else if (arth == "sub") {
+            else if (arth.equals("sub")) {
                 out.write("M = M - D");
                 out.newLine();
             }
-            else if (arth == "and") {
+            else if (arth.equals("and")) {
                 out.write("M = D & M");
                 out.newLine();
             }
-            else if (arth == "or") {
+            else if (arth.equals("or")) {
                 out.write("M = D | M");
                 out.newLine();
             }
-            else if (arth == "neg") {
+            else if (arth.equals("neg")) {
                 out.write("M = -D");
                 out.newLine();
             }
-            else if (arth == "not") {
+            else if (arth.equals("not")) {
                 out.write("M = !D");
                 out.newLine();
             }
             // these operations involve labels for if conditionals
-            else if (arth == "eq" || arth == "gt" || arth == "lt") {
+            else if (arth.equals("eq") || arth.equals("gt") || arth.equals("lt")) {
                 // D = y - x
                 out.write("D = D - M");
                 out.newLine();
@@ -104,15 +107,15 @@ public class CodeWriter {
                 
                 // C-instruction with different jump statements
                 // if 'D == 0' goto IF_i
-                if (arth == "eq") {
+                if (arth.equals("eq")) {
                     out.write("D;JEQ");
                     out.newLine();
                 }
-                else if (arth == "gt") {
+                else if (arth.equals("gt")) {
                     out.write("D;JLT");
                     out.newLine();
                 }
-                else if (arth == "lt") {
+                else if (arth.equals("lt")) {
                     out.write("D;JGT");
                     out.newLine();
                 }
@@ -157,19 +160,19 @@ public class CodeWriter {
         
         // store the appropriate segment
         // @segment
-        if (arg1 == "argument") {
+        if (arg1.equals("argument")) {
             seg = "ARG";
         }
-        else if (arg1 == "local") {
+        else if (arg1.equals("local")) {
             seg = "LCL";
         }
-        else if (arg1 == "this") {
+        else if (arg1.equals("this")) {
             seg = "THIS";
         }
-        else if (arg1 == "that") {
+        else if (arg1.equals("that")) {
             seg = "THAT";
         }
-        else if (arg1 == "temp") {
+        else if (arg1.equals("temp")) {
             seg = "5";
         }
         
@@ -177,7 +180,7 @@ public class CodeWriter {
             // create assembly code for pseudocode
             // addr = LCL + i
             // !!! LCL and like invoked in what way???
-            if (!(arg1 == "constant" || arg1 == "static" || arg1 == "pointer")) {
+            if (!(arg1.equals("constant") || arg1.equals("static") || arg1.equals("pointer"))) {
                 
                 // @LCL
                 out.write("@" + seg);
@@ -202,7 +205,7 @@ public class CodeWriter {
             // Pop command
             // SP--
             // *addr = *SP 
-            if (type == "C_POP") {
+            if (type.equals("C_POP")) {
                 //@ SP--
                 out.write("@SP");
                 out.newLine();
@@ -215,7 +218,7 @@ public class CodeWriter {
                 out.write("D = M");
                 out.newLine();
                 
-                if (arg1 == "pointer") {
+                if (arg1.equals("pointer")) {
                     if (index == "0") {
                         out.write("@THIS");
                     }
@@ -224,7 +227,7 @@ public class CodeWriter {
                     }
                     out.newLine();
                 }
-                else if (arg1 == "static") {
+                else if (arg1.equals("static")) {
                     out.write("@" + file + "." + index);
                     out.newLine();
                 }
@@ -245,7 +248,7 @@ public class CodeWriter {
             // SP++
             else {
                 //eg: A = M or @Foo.5 or @THIS
-                if (arg1 == "pointer") {
+                if (arg1.equals("pointer")) {
                     if (index == "0") {
                         out.write("@THIS");
                     }
@@ -254,7 +257,7 @@ public class CodeWriter {
                     }
                     out.newLine();
                 }
-                else if (arg1 == "static") {
+                else if (arg1.equals("static")) {
                     out.write("@" + file + "." + index);
                     out.newLine();
                 }
