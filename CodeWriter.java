@@ -111,11 +111,11 @@ public class CodeWriter {
                     out.newLine();
                 }
                 else if (arth.equals("gt")) {
-                    out.write("D;JLT");
+                    out.write("D;JLE");
                     out.newLine();
                 }
                 else if (arth.equals("lt")) {
-                    out.write("D;JGT");
+                    out.write("D;JGE");
                     out.newLine();
                 }
                 
