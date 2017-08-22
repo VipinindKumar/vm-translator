@@ -57,7 +57,7 @@ public class CodeWriter {
             
             // uses two variables from stack to perform the arithmetic
             // x
-            if (!(arth.equals("not") && arth.equals("neg"))) {
+            if (!(arth.equals("not") || arth.equals("neg"))) {
                 // SP--
                 out.write("@SP");
                 out.newLine();
