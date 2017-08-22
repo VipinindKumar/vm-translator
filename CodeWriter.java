@@ -21,7 +21,7 @@ public class CodeWriter {
             outFile = outFile.split(".vm")[0];
         }
         // sets file name
-        setFileName(outfile);
+        setFileName(outFile);
         
         outFile = outFile + ".asm";
         
@@ -36,7 +36,7 @@ public class CodeWriter {
     // Informs the codeWriter that
     // the translation of a new file has started
     public void setFileName (String fileName) {
-        if (fileName.contains("/") {
+        if (fileName.contains("/")) {
             String[] dir = fileName.split("/");
             file = dir[dir.length - 1];
         }
