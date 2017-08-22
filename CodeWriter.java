@@ -197,7 +197,7 @@ public class CodeWriter {
                 out.write("@" + seg);
                 out.newLine();
                 // D = A
-                out.write("D = M");
+                out.write("D = A");
                 out.newLine();
                 // @i
                 out.write("@" + index);
