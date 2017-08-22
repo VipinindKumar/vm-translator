@@ -291,8 +291,8 @@ public class CodeWriter {
                     out.write("@" + file + "." + index);
                     out.newLine();
                 
-                    // D = A
-                    out.write("D = A");
+                    // D = M
+                    out.write("D = M");
                     out.newLine();
                 }
                 else if (arg1.equals("constant")) {
