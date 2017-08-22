@@ -268,7 +268,7 @@ public class CodeWriter {
             else {
                 //eg: A = M or @Foo.5 or @THIS
                 if (arg1.equals("pointer")) {
-                    if (index == "0") {
+                    if (index.equals("0")) {
                         out.write("@THIS");
                     }
                     else {
@@ -276,8 +276,8 @@ public class CodeWriter {
                     }
                     out.newLine();
                 
-                    // D = A
-                    out.write("D = A");
+                    // D = M
+                    out.write("D = M");
                     out.newLine();
                 }
                 else if (arg1.equals("static")) {
