@@ -103,7 +103,6 @@ public class CodeWriter {
                 // i used to create a new Label with every new if conditional
                 out.write("@IF" + Integer.toString(i));
                 out.newLine();
-                i++;
                 
                 // C-instruction with different jump statements
                 // if 'D == 0' goto IF_i
@@ -129,14 +128,23 @@ public class CodeWriter {
                 out.write("M = 0");
                 out.newLine();
                 
+                // jump to the end of conditional after executing
+                // one part of the conditional
+                out.write("@END" + Integer.toString(i));
+                out.newLine();
+                out.write("0;JMP");
+                out.newLine();
+                
                 // 'true' part
-                out.write("(IF" + Integer.toString(i - 1) + ")");
+                out.write("(IF" + Integer.toString(i) + ")");
                 out.newLine();
                 out.write("@SP");
                 out.newLine();
                 out.write("A = M");
                 out.newLine();
                 out.write("M = -1");
+                out.newLine();
+                out.write("(END" + Integer.toString(i) + ")");
                 out.newLine();
             }
             
@@ -145,6 +153,9 @@ public class CodeWriter {
             out.newLine();
             out.write("M = M + 1");
             out.newLine();
+            
+            // incremennt i for the different conditional statements
+            i++;
             
         }
         catch (IOException e) {
