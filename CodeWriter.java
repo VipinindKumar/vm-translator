@@ -196,9 +196,17 @@ public class CodeWriter {
                 // @LCL
                 out.write("@" + seg);
                 out.newLine();
-                // D = A
-                out.write("D = A");
-                out.newLine();
+                
+                if (arg1.equals("temp")) {
+                    // D = A
+                    out.write("D = A");
+                    out.newLine();
+                }
+                else {
+                    // D = M
+                    out.write("D = M");
+                    out.newLine();
+                }
                 // @i
                 out.write("@" + index);
                 out.newLine();
