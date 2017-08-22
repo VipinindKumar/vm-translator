@@ -238,7 +238,7 @@ public class CodeWriter {
                 out.newLine();
                 
                 if (arg1.equals("pointer")) {
-                    if (index == "0") {
+                    if (index.equals("0")) {
                         out.write("@THIS");
                     }
                     else {
