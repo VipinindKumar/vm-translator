@@ -375,7 +375,9 @@ public class CodeWriter {
     // Write Assembly code for the Label command
     public void writeLabel(String label) {
         try {
-
+            // Label LABEL
+            out.write("(" + label + ")");
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -385,7 +387,11 @@ public class CodeWriter {
     // Write Assembly code for the goto command
     public void writeGoto(String label) {
         try {
-
+            // goto LABEL
+            out.write("@" + label);
+            out.newLine();
+            out.write("0;JMP");
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
