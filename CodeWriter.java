@@ -401,6 +401,21 @@ public class CodeWriter {
     // Write Assembly code for the if-goto command
     public void writeIf(String label) {
         try {
+            // pop top-most value from stack
+            out.write("@SP");
+            out.newLine();
+            out.write("M = M - 1");
+            out.newLine();
+            out.write("A = M");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+
+            // jump to the label, if the value is not equal to 0
+            out.write("@" + label);
+            out.newLine();
+            out.write("D;JNE");
+            out.newLine();
 
         }
         catch (IOException e) {
