@@ -1,5 +1,5 @@
 /**output assembly code for VMTranslator.java
- * 
+ *
  * take the file name to ouput to and get ready to write to it,
  * use writeArithmetic() and writePushPop() to translate,
  * arithmetic and push/pop commands from the VM file.
@@ -8,12 +8,12 @@
 import java.io.*;
 
 public class CodeWriter {
-    
+
     public BufferedWriter out;
     public String file;
     public int i = 1;
-    
-    /** Open the output file, and 
+
+    /** Open the output file, and
      * get ready to write
      **/
     public CodeWriter (String outFile) {
@@ -22,9 +22,9 @@ public class CodeWriter {
         }
         // sets file name
         setFileName(outFile);
-        
+
         outFile = outFile + ".asm";
-        
+
         try {
             out = new BufferedWriter(new FileWriter(new File(outFile)));
         }
@@ -32,7 +32,7 @@ public class CodeWriter {
             System.out.println(e);
         }
     }
-    
+
     // Informs the codeWriter that
     // the translation of a new file has started
     public void setFileName (String fileName) {
@@ -44,8 +44,8 @@ public class CodeWriter {
             file = fileName;
         }
     }
-    
-    // write the assembly code for given 
+
+    // write the assembly code for given
     // arithmetic command
     public void writeArithmetic (String arth) {
         try {
@@ -61,7 +61,7 @@ public class CodeWriter {
             out.newLine();
             out.write("D = M");
             out.newLine();
-            
+
             // uses two variables from stack to perform the arithmetic
             // x
             if (!(arth.equals("not") || arth.equals("neg"))) {
@@ -74,8 +74,8 @@ public class CodeWriter {
                 out.write("A = M");
                 out.newLine();
             }
-            
-            
+
+
             // different arth specific function coommands
             if (arth.equals("add")) {
                 out.write("M = D + M");
@@ -110,7 +110,7 @@ public class CodeWriter {
                 // i used to create a new Label with every new if conditional
                 out.write("@IF" + Integer.toString(i));
                 out.newLine();
-                
+
                 // C-instruction with different jump statements
                 // if 'D == 0' goto IF_i
                 if (arth.equals("eq")) {
@@ -125,7 +125,7 @@ public class CodeWriter {
                     out.write("D;JGT");
                     out.newLine();
                 }
-                
+
                 // similar part of the assembly code for the commands
                 // 'else false' part
                 out.write("@SP");
@@ -134,14 +134,14 @@ public class CodeWriter {
                 out.newLine();
                 out.write("M = 0");
                 out.newLine();
-                
+
                 // jump to the end of conditional after executing
                 // one part of the conditional
                 out.write("@END" + Integer.toString(i));
                 out.newLine();
                 out.write("0;JMP");
                 out.newLine();
-                
+
                 // 'true' part
                 out.write("(IF" + Integer.toString(i) + ")");
                 out.newLine();
@@ -154,28 +154,28 @@ public class CodeWriter {
                 out.write("(END" + Integer.toString(i) + ")");
                 out.newLine();
             }
-            
+
             // SP++, similar for all commands
             out.write("@SP");
             out.newLine();
             out.write("M = M + 1");
             out.newLine();
-            
+
             // incremennt i for the different conditional statements
             i++;
-            
+
         }
         catch (IOException e) {
             System.out.println(e);
         }
-        
+
     }
-    
+
     // write the translation of push/pop command
     public void writePushPop (String type, String arg1, String index) {
-        
+
         String seg = "";
-        
+
         // store the appropriate segment
         // @segment
         if (arg1.equals("argument")) {
@@ -193,17 +193,17 @@ public class CodeWriter {
         else if (arg1.equals("temp")) {
             seg = "5";
         }
-        
+
         try {
             // create assembly code for pseudocode
             // addr = LCL + i
             // !!! LCL and like invoked in what way???
             if (!(arg1.equals("constant") || arg1.equals("static") || arg1.equals("pointer"))) {
-                
+
                 // @LCL
                 out.write("@" + seg);
                 out.newLine();
-                
+
                 if (arg1.equals("temp")) {
                     // D = A
                     out.write("D = A");
@@ -227,23 +227,23 @@ public class CodeWriter {
                 out.write("M = D");
                 out.newLine();
             }
-            
+
             // Pop command
             // SP--
-            // *addr = *SP 
+            // *addr = *SP
             if (type.equals("C_POP")) {
                 //@ SP--
                 out.write("@SP");
                 out.newLine();
                 out.write("M = M - 1");
                 out.newLine();
-                
+
                 // *addr = *SP
                 out.write("A = M");
                 out.newLine();
                 out.write("D = M");
                 out.newLine();
-                
+
                 if (arg1.equals("pointer")) {
                     if (index.equals("0")) {
                         out.write("@THIS");
@@ -263,12 +263,12 @@ public class CodeWriter {
                     out.write("A = M");
                     out.newLine();
                 }
-                
+
                 out.write("M = D");
                 out.newLine();
             }
-            
-            
+
+
             // Push command
             // *SP = *addr
             // SP++
@@ -282,7 +282,7 @@ public class CodeWriter {
                         out.write("@THAT");
                     }
                     out.newLine();
-                
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
@@ -290,7 +290,7 @@ public class CodeWriter {
                 else if (arg1.equals("static")) {
                     out.write("@" + file + "." + index);
                     out.newLine();
-                
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
@@ -298,7 +298,7 @@ public class CodeWriter {
                 else if (arg1.equals("constant")) {
                     out.write("@" + index);
                     out.newLine();
-                    
+
                     // D = A
                     out.write("D = A");
                     out.newLine();
@@ -306,29 +306,29 @@ public class CodeWriter {
                 else {
                     out.write("A = M");
                     out.newLine();
-                
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
                 }
-                
+
                 // @SP
                 out.write("@SP");
                 out.newLine();
-                
+
                 // A = M
                 out.write("A = M");
                 out.newLine();
-                
+
                 // M = D
                 out.write("M = D");
                 out.newLine();
-                
+
                 // SP++
                 // @SP
                 out.write("@SP");
                 out.newLine();
-                
+
                 // M = M + 1
                 out.write("M = M + 1");
                 out.newLine();
@@ -337,15 +337,97 @@ public class CodeWriter {
         catch (IOException e) {
             System.out.println(e);
         }
-        
+
     }
-    
+
     // close the output file
     public void close () {
         try {
             out.close();
         }
         catch (IOException e){
+            System.out.println(e);
+        }
+    }
+
+    // Write assembly code that affects the VM initialization,
+    // also called bootstrap code, must be placed at the begining
+    public void writeInit() {
+        try {
+            // SP = 256
+            out.write("@256");
+            out.newLine();
+            out.write("D = A");
+            out.newLine();
+            out.write("@SP");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+
+            // call Sys.init
+            writeCall("Sys.init", 0);
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the Label command
+    public void writeLabel(String label) {
+        try {
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the goto command
+    public void writeGoto(String label) {
+        try {
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the if-goto command
+    public void writeIf(String label) {
+        try {
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the call command
+    public void writeCall(String funcName, int nArgs) {
+        try {
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the return command
+    public void writeReturn() {
+        try {
+
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Write Assembly code for the function command
+    public void writeFunction(String funcName, int nLocals) {
+        try {
+
+        }
+        catch (IOException e) {
             System.out.println(e);
         }
     }
