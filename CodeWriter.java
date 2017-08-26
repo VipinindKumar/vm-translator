@@ -424,9 +424,68 @@ public class CodeWriter {
     }
 
     // Write Assembly code for the call command
+    /**Saves the caller's frame
+     * Set ARG
+     * Jumps to execute the function
+     **/
     public void writeCall(String funcName, int nArgs) {
         try {
-
+            // push return address
+            out.write("@returnAddress" + i);
+            out.newLine();
+            out.write("D = A");
+            out.newLine();
+            // push on Stack
+            pushToStack();
+            
+            // push LCL
+            out.write("@LCL");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            pushToStack();
+            
+            // push ARG
+            out.write("@ARG");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            pushToStack();
+            
+            // push THIS
+            out.write("@THIS");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            pushToStack();
+            
+            // push THAT
+            out.write("@THAT");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            pushToStack();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // Write assembly code for pushing value in D-register to Stack
+    private void pushToStack() {
+        try {
+            // push on Stack
+            out.write("@SP");
+            out.newLine();
+            out.write("A = M");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            // SP++
+            out.write("@SP");
+            out.newLine();
+            out.write("M = M + 1");
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
