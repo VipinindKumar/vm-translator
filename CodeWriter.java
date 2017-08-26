@@ -430,6 +430,7 @@ public class CodeWriter {
      **/
     public void writeCall(String funcName, int nArgs) {
         try {
+            // Save caller's frame
             // push return address
             out.write("@returnAddress" + i);
             out.newLine();
@@ -465,6 +466,48 @@ public class CodeWriter {
             out.write("D = M");
             out.newLine();
             pushToStack();
+            
+            
+            // Update value of ARG and LCL
+            // ARG = SP - 5 - nArgs
+            out.write("@SP");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@5");
+            out.newLine();
+            out.write("D = D - A");
+            out.newLine();
+            out.write("@" + nArgs);
+            out.newLine();
+            out.write("D = D - A");
+            out.newLine();
+            out.write("@ARG");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            
+            // LCL = SP
+            out.write("@SP");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@LCL");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            
+            
+            // goto funcName
+            writeGoto(funcName);
+            
+            
+            // (returnAddress)
+            out.write("(returnAddress" + i + ")");
+            out.newLine();
+            
+            // increment i for non-duplicate labels
+            i++;
         }
         catch (IOException e) {
             System.out.println(e);
@@ -505,7 +548,7 @@ public class CodeWriter {
     // Write Assembly code for the function command
     public void writeFunction(String funcName, int nLocals) {
         try {
-
+            
         }
         catch (IOException e) {
             System.out.println(e);
