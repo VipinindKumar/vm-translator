@@ -548,7 +548,54 @@ public class CodeWriter {
     // Write Assembly code for the function command
     public void writeFunction(String funcName, int nLocals) {
         try {
+            // (funcName)
+            out.write("(" + funcName + ")");
+            out.newLine();
             
+            
+            // repeat nLocals times : push 0
+            // n = nLocals
+            out.write("@" + nLocals);
+            out.newLine();
+            out.write("D = A");
+            out.newLine();
+            out.write("@n");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            
+            // while(n > 0)
+            out.write("(LOOP" + i + ")");
+            out.newLine();
+            out.write("@n");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@END_LOOP" + i);
+            out.newLine();
+            out.write("D;JLE");
+            out.newLine();
+            
+            // push 0
+            writePushPop("C_PUSH", "constant", "0");
+            
+            // n--
+            out.write("@n");
+            out.newLine();
+            out.write("M = M - 1");
+            out.newLine();
+            
+            // goto LOOP
+            out.write("@LOOP" + i);
+            out.newLine();
+            out.write("0;JMP");
+            out.newLine();
+            
+            // (END_LOOPi)
+            out.write("(END_LOOP" + i + ")");
+            out.newLine();
+            
+            i++;
         }
         catch (IOException e) {
             System.out.println(e);
