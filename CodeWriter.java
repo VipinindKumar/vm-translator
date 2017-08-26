@@ -538,7 +538,73 @@ public class CodeWriter {
     // Write Assembly code for the return command
     public void writeReturn() {
         try {
-
+            // endFrame = LCL
+            out.write("@LCL");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@endFrame");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            
+            // retAddr = *(endFrame - 5)
+            // D-register still have endFrame value
+            endFrameMinus("retAddr", "5");
+            
+            // *ARG = pop()
+            writePushPop("C_POP", "argument", "0");
+            
+            // SP = ARG + 1
+            out.write("@ARG");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("D = D + 1");
+            out.newLine();
+            out.write("@SP");
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
+            
+            // THAT = *(endFrame - 1)
+            endFrameMinus("THAT", "1");
+            
+            // THIS = *(endFrame - 2)
+            endFrameMinus("THIS", "2");
+            
+            // ARG = *(endFrame - 3)
+            endFrameMinus("ARG", "3");
+            
+            // LCL = *(endFrame - 4)
+            endFrameMinus("LCL", "4");
+            
+            // goto retAddr
+            writeGoto("retAddr");
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+    
+    private void endFrameMinus(String seg, String n) {
+        try {
+            out.write("@endFrame");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@" + n);
+            out.newLine();
+            out.write("D = D - A");
+            out.newLine();
+            out.write("A = D");
+            out.newLine();
+            out.write("D = M");
+            out.newLine();
+            out.write("@" + seg);
+            out.newLine();
+            out.write("M = D");
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
