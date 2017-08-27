@@ -55,6 +55,7 @@ public class CodeWriter {
         try {
             // add the command as a comment
             writeComment(arth);
+            
             // same for every arithmetic command,
             // y
             // SP--

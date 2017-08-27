@@ -91,9 +91,6 @@ public class Parser {
         else if (type.equals("pop")) {
             type = "C_POP";
         }
-        else if (type.equals("arithmetic")) {
-            type = "C_ARITHMETIC";
-        }
         else if (type.equals("label")) {
             type = "C_LABEL";
         }
@@ -111,6 +108,9 @@ public class Parser {
         }
         else if (type.equals("call")) {
             type = "C_CALL";
+        }
+        else {
+            type = "C_ARITHMETIC";
         }
         return type;
     }
