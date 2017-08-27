@@ -587,6 +587,7 @@ public class CodeWriter {
         }
     }
     
+    // write assembly code for seg = *(endFrame - n)
     private void endFrameMinus(String seg, String n) {
         try {
             out.write("@endFrame");
