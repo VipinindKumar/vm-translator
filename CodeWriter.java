@@ -432,7 +432,7 @@ public class CodeWriter {
      * Set ARG
      * Jumps to execute the function
      **/
-    public void writeCall(String funcName, int nArgs) {
+    public void writeCall(String funcName, String nArgs) {
         try {
             // Save caller's frame
             // push return address
@@ -617,7 +617,7 @@ public class CodeWriter {
     }
 
     // Write Assembly code for the function command
-    public void writeFunction(String funcName, int nLocals) {
+    public void writeFunction(String funcName, String nLocals) {
         try {
             // (funcName)
             out.write("(" + funcName + ")");

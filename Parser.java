@@ -94,22 +94,22 @@ public class Parser {
         else if (type.equals("arithmetic")) {
             type = "C_ARITHMETIC";
         }
-        else if (type.equals("label") {
+        else if (type.equals("label")) {
             type = "C_LABEL";
         }
-        else if (type.equals("goto") {
+        else if (type.equals("goto")) {
             type = "C_GOTO";
         }
-        else if (type.equals("if-goto") {
+        else if (type.equals("if-goto")) {
             type = "C_IF";
         }
-        else if (type.equals("function") {
+        else if (type.equals("function")) {
             type = "C_FUNCTION";
         }
-        else if (type.equals("return") {
+        else if (type.equals("return")) {
             type = "C_RETURN";
         }
-        else if (type.equals("call") {
+        else if (type.equals("call")) {
             type = "C_CALL";
         }
         return type;
