@@ -370,6 +370,8 @@ public class CodeWriter {
     // also called bootstrap code, must be placed at the begining
     public void writeInit() {
         try {
+            writeComment("BootStrap code");
+            
             // SP = 256
             out.write("@256");
             out.newLine();
@@ -391,6 +393,8 @@ public class CodeWriter {
     // Write Assembly code for the Label command
     public void writeLabel(String label) {
         try {
+            writeComment("label " + label);
+            
             // Label LABEL
             out.write("(" + label.toUpperCase() + ")");
             out.newLine();
@@ -403,6 +407,8 @@ public class CodeWriter {
     // Write Assembly code for the goto command
     public void writeGoto(String label) {
         try {
+            writeComment("goto " + label);
+            
             // goto LABEL
             out.write("@" + label.toUpperCase());
             out.newLine();
@@ -417,6 +423,8 @@ public class CodeWriter {
     // Write Assembly code for the if-goto command
     public void writeIf(String label) {
         try {
+            writeComment("if-goto " + label);
+            
             // pop top-most value from stack
             out.write("@SP");
             out.newLine();
