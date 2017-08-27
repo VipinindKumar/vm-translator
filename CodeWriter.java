@@ -53,6 +53,7 @@ public class CodeWriter {
     // arithmetic command
     public void writeArithmetic (String arth) {
         try {
+            
             // same for every arithmetic command,
             // y
             // SP--
@@ -667,6 +668,17 @@ public class CodeWriter {
             out.newLine();
             
             i++;
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+    
+    // Write one line comments with string provided
+    private void writeComment(String line) {
+        try {
+            out.write("// " + line);
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
