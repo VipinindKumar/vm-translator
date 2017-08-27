@@ -79,7 +79,12 @@ public class VMTranslator {
         // if path is a directory
         if (files != null) {
             // create CodeWriter
-            vmt.code = new CodeWriter(args[0], true);
+            String outFileName = args[0];
+            if (args[0].contains("/")) {
+                String[] dir = args[0].split("/");
+                outFileName = dir[dir.length - 1];
+            }
+            vmt.code = new CodeWriter(args[0] + "/" + outFileName, true);
             
             for (File file : files) {
               vmt.parse(file);
