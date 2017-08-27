@@ -53,14 +53,12 @@ public class CodeWriter {
     // arithmetic command
     public void writeArithmetic (String arth) {
         try {
+            // add the command as a comment
+            writeComment(arth);
             // same for every arithmetic command,
             // y
             // SP--
             out.write("@SP");
-            
-            // add the command as a comment
-            writeComment(arth);
-            
             out.newLine();
             out.write("M = M - 1");
             out.newLine();
@@ -221,7 +219,7 @@ public class CodeWriter {
                 // @LCL
                 out.write("@" + seg);
                 out.newLine();
-                
+
                 if (arg1.equals("temp")) {
                     // D = A
                     out.write("D = A");
@@ -252,9 +250,6 @@ public class CodeWriter {
             if (type.equals("C_POP")) {
                 //@ SP--
                 out.write("@SP");
-                
-                writeComment(com + " " + arg1 + " " + index);
-                
                 out.newLine();
                 out.write("M = M - 1");
                 out.newLine();
@@ -302,49 +297,37 @@ public class CodeWriter {
                     else {
                         out.write("@THAT");
                     }
-                    
-                    writeComment(com + " " + arg1 + " " + index);
-                    
                     out.newLine();
-                    
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
                 }
                 else if (arg1.equals("static")) {
                     out.write("@" + file + "." + index);
-                    
-                    writeComment(com + " " + arg1 + " " + index);
-                    
                     out.newLine();
-                    
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
                 }
                 else if (arg1.equals("constant")) {
                     out.write("@" + index);
-                    
-                    writeComment(com + " " + arg1 + " " + index);
-                    
                     out.newLine();
-                    
+
                     // D = A
                     out.write("D = A");
                     out.newLine();
                 }
                 else {
                     out.write("A = M");
-                    
-                    writeComment(com + " " + arg1 + " " + index);
-                    
                     out.newLine();
-                    
+
                     // D = M
                     out.write("D = M");
                     out.newLine();
                 }
-                
+
                 // @SP
                 out.write("@SP");
                 out.newLine();
@@ -387,11 +370,10 @@ public class CodeWriter {
     // also called bootstrap code, must be placed at the begining
     public void writeInit() {
         try {
-            // SP = 256
-            out.write("@256");
-            
             writeComment("BootStrap code");
             
+            // SP = 256
+            out.write("@256");
             out.newLine();
             out.write("D = A");
             out.newLine();
@@ -411,11 +393,10 @@ public class CodeWriter {
     // Write Assembly code for the Label command
     public void writeLabel(String label) {
         try {
-            // Label LABEL
-            out.write("(" + label.toUpperCase() + ")");
-            
             writeComment("label " + label);
             
+            // Label LABEL
+            out.write("(" + label.toUpperCase() + ")");
             out.newLine();
         }
         catch (IOException e) {
@@ -426,11 +407,10 @@ public class CodeWriter {
     // Write Assembly code for the goto command
     public void writeGoto(String label) {
         try {
-            // goto LABEL
-            out.write("@" + label.toUpperCase());
-            
             writeComment("goto " + label);
             
+            // goto LABEL
+            out.write("@" + label.toUpperCase());
             out.newLine();
             out.write("0;JMP");
             out.newLine();
@@ -443,11 +423,10 @@ public class CodeWriter {
     // Write Assembly code for the if-goto command
     public void writeIf(String label) {
         try {
-            // pop top-most value from stack
-            out.write("@SP");
-            
             writeComment("if-goto " + label);
             
+            // pop top-most value from stack
+            out.write("@SP");
             out.newLine();
             out.write("M = M - 1");
             out.newLine();
@@ -475,13 +454,11 @@ public class CodeWriter {
      **/
     public void writeCall(String funcName, String nArgs) {
         try {
+            writeComment("call " + funcName + " " + nArgs);
             
             // Save caller's frame
             // push return address
             out.write("@returnAddress" + i);
-            
-            writeComment("call " + funcName + " " + nArgs);
-            
             out.newLine();
             out.write("D = A");
             out.newLine();
@@ -587,12 +564,10 @@ public class CodeWriter {
     // Write Assembly code for the return command
     public void writeReturn() {
         try {
+            writeComment("return");
             
             // endFrame = LCL
             out.write("@LCL");
-            
-            writeComment("return");
-            
             out.newLine();
             out.write("D = M");
             out.newLine();
@@ -668,12 +643,10 @@ public class CodeWriter {
     // Write Assembly code for the function command
     public void writeFunction(String funcName, String nLocals) {
         try {
+            writeComment("function " + funcName + " " + nLocals);
             
             // (funcName)
             out.write("(" + funcName + ")");
-            
-            writeComment("function " + funcName + " " + nLocals);
-            
             out.newLine();
             
             
@@ -729,7 +702,8 @@ public class CodeWriter {
     // Write one line comments with string provided
     private void writeComment(String line) {
         try {
-            out.write("               // " + line);
+            out.write("// " + line);
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
