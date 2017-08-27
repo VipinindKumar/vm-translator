@@ -1,6 +1,6 @@
 /**output assembly code for VMTranslator.java
  *
- * take the file name to ouput to and get ready to write to it,
+ * take the file name to output to and get ready to write to it,
  * use writeArithmetic() and writePushPop() to translate,
  * arithmetic and push/pop commands from the VM file.
  **/
@@ -80,7 +80,7 @@ public class CodeWriter {
             }
 
 
-            // different arth specific function coommands
+            // different arth specific function commands
             if (arth.equals("add")) {
                 out.write("M = D + M");
                 out.newLine();
@@ -165,7 +165,7 @@ public class CodeWriter {
             out.write("M = M + 1");
             out.newLine();
 
-            // incremennt i for the different conditional statements
+            // Increment i for the different conditional statements
             i++;
 
         }
