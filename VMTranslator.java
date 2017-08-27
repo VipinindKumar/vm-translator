@@ -2,7 +2,7 @@
  * 
  * Usage: java VMTranslator <file-name/path-to-directory>
  * 
- * Dependicies: Parser.java, CodeWriter.java
+ * Dependencies: Parser.java, CodeWriter.java
  * 
  * - Constructs a Parser from input file
  * - Construct a CodeWriter to generate code in output file
@@ -28,7 +28,7 @@ public class VMTranslator {
             
             String ctype = parser.commandType();
             
-            // artithmetic command
+            // Arithmetic command
             if (ctype.equals("C_ARITHMETIC")) {
                 code.writeArithmetic(parser.arg1());
             }

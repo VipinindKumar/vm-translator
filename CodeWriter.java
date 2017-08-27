@@ -380,7 +380,7 @@ public class CodeWriter {
     public void writeLabel(String label) {
         try {
             // Label LABEL
-            out.write("(" + label + ")");
+            out.write("(" + label.toUpperCase() + ")");
             out.newLine();
         }
         catch (IOException e) {
@@ -392,7 +392,7 @@ public class CodeWriter {
     public void writeGoto(String label) {
         try {
             // goto LABEL
-            out.write("@" + label);
+            out.write("@" + label.toUpperCase());
             out.newLine();
             out.write("0;JMP");
             out.newLine();
@@ -416,7 +416,7 @@ public class CodeWriter {
             out.newLine();
 
             // jump to the label, if the value is not equal to 0
-            out.write("@" + label);
+            out.write("@" + label.toUpperCase());
             out.newLine();
             out.write("D;JNE");
             out.newLine();
