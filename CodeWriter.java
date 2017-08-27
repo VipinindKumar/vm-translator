@@ -454,6 +454,8 @@ public class CodeWriter {
      **/
     public void writeCall(String funcName, String nArgs) {
         try {
+            writeComment("call " + funcName + " " + nArgs);
+            
             // Save caller's frame
             // push return address
             out.write("@returnAddress" + i);
@@ -562,6 +564,8 @@ public class CodeWriter {
     // Write Assembly code for the return command
     public void writeReturn() {
         try {
+            writeComment("return");
+            
             // endFrame = LCL
             out.write("@LCL");
             out.newLine();
@@ -639,6 +643,8 @@ public class CodeWriter {
     // Write Assembly code for the function command
     public void writeFunction(String funcName, String nLocals) {
         try {
+            writeComment("function " + funcName + " " + nLocals);
+            
             // (funcName)
             out.write("(" + funcName + ")");
             out.newLine();
