@@ -32,8 +32,33 @@ public class VMTranslator {
             if (ctype.equals("C_ARITHMETIC")) {
                 code.writeArithmetic(parser.arg1());
             }
+            // Push/Pop command
             else if (ctype.equals("C_PUSH") || ctype.equals("C_POP")) {
                 code.writePushPop(ctype, parser.arg1(), parser.arg2());
+            }
+            // Label command
+            else if (ctype.equals("C_LABEL")) {
+                code.writeLabel(parser.arg1());
+            }
+            // goto command
+            else if (ctype.equals("C_GOTO")) {
+                code.writeGoto(parser.arg1());
+            }
+            // if-goto command
+            else if (ctype.equals("C_IF")) {
+                code.writeIf(parser.arg1());
+            }
+            // call command
+            else if (ctype.equals("C_CALL")) {
+                code.writeCall(parser.arg1(), parser.arg2());
+            }
+            // function command
+            else if (ctype.equals("C_FUNCTION")) {
+                code.writeFunction(parser.arg1(), parser.arg2());
+            }
+            // return command
+            else if (ctype.equals("C_RETURN")) {
+                code.writeReturn();
             }
         }
     }
@@ -43,8 +68,6 @@ public class VMTranslator {
         File path = new File(args[0]);
         
         VMTranslator vmt = new VMTranslator();
-        // create CodeWriter
-        vmt.code = new CodeWriter(args[0]);
         
         // argument could be a file or directory containing multiple files
         File[] files = path.listFiles();
