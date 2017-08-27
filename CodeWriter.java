@@ -53,7 +53,8 @@ public class CodeWriter {
     // arithmetic command
     public void writeArithmetic (String arth) {
         try {
-            
+            // add the command as a comment
+            writeComment(arth);
             // same for every arithmetic command,
             // y
             // SP--
@@ -178,7 +179,17 @@ public class CodeWriter {
 
     // write the translation of push/pop command
     public void writePushPop (String type, String arg1, String index) {
-
+        // add command as a comment
+        String com;
+        if (type.equals("C_POP")) {
+            com = "pop";
+        }
+        else {
+            com = "push";
+        }
+        writeComment(com + " " + arg1 + index);
+        
+        
         String seg = "";
 
         // store the appropriate segment
@@ -677,6 +688,7 @@ public class CodeWriter {
     // Write one line comments with string provided
     private void writeComment(String line) {
         try {
+            out.newLine();
             out.write("// " + line);
             out.newLine();
         }
