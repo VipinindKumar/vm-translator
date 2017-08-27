@@ -369,7 +369,7 @@ public class CodeWriter {
             out.newLine();
 
             // call Sys.init
-            writeCall("Sys.init", 0);
+            writeCall("Sys.init", "0");
         }
         catch (IOException e) {
             System.out.println(e);
