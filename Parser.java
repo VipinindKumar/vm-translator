@@ -91,8 +91,26 @@ public class Parser {
         else if (type.equals("pop")) {
             type = "C_POP";
         }
-        else {
+        else if (type.equals("arithmetic")) {
             type = "C_ARITHMETIC";
+        }
+        else if (type.equals("label") {
+            type = "C_LABEL";
+        }
+        else if (type.equals("goto") {
+            type = "C_GOTO";
+        }
+        else if (type.equals("if-goto") {
+            type = "C_IF";
+        }
+        else if (type.equals("function") {
+            type = "C_FUNCTION";
+        }
+        else if (type.equals("return") {
+            type = "C_RETURN";
+        }
+        else if (type.equals("call") {
+            type = "C_CALL";
         }
         return type;
     }
@@ -107,11 +125,8 @@ public class Parser {
         if (type.equals("C_ARITHMETIC")) {
             return command;
         }
-        else if (type.equals("C_PUSH") || type.equals("C_POP")) {
-            return command.split(" ")[1];
-        }
         else {
-            return null;
+            return command.split(" ")[1];
         }
     }
     

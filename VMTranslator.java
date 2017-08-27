@@ -50,12 +50,18 @@ public class VMTranslator {
         File[] files = path.listFiles();
         // if path is a directory
         if (files != null) {
+            // create CodeWriter
+            vmt.code = new CodeWriter(args[0], true);
+            
             for (File file : files) {
               vmt.parse(file);
             }
         }
         // single file
         else {
+            // create CodeWriter
+            vmt.code = new CodeWriter(args[0], false);
+            
             vmt.parse(path);
         }
         
