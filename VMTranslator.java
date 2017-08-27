@@ -70,7 +70,12 @@ public class VMTranslator {
         VMTranslator vmt = new VMTranslator();
         
         // argument could be a file or directory containing multiple files
-        File[] files = path.listFiles();
+        // FilenameFilter will only accept files with .vm extension
+        File[] files = path.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".vm");
+            }
+        });
         // if path is a directory
         if (files != null) {
             // create CodeWriter
