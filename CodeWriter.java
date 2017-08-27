@@ -16,7 +16,7 @@ public class CodeWriter {
     /** Open the output file, and
      * get ready to write
      **/
-    public CodeWriter (String outFile) {
+    public CodeWriter (String outFile, boolean bootStrap) {
         if (outFile.contains(".vm")) {
             outFile = outFile.split(".vm")[0];
         }
@@ -27,6 +27,10 @@ public class CodeWriter {
 
         try {
             out = new BufferedWriter(new FileWriter(new File(outFile)));
+            
+            if (bootStrap) {
+                writeInit();
+            }
         }
         catch (IOException e) {
             System.out.println(e);
