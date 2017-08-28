@@ -647,7 +647,7 @@ public class CodeWriter {
             writeComment("function " + funcName + " " + nLocals);
             
             // (funcName)
-            out.write("(" + funcName + ")");
+            out.write("(" + funcName.toUpperCase() + ")");
             out.newLine();
             
             
