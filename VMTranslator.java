@@ -81,8 +81,7 @@ public class VMTranslator {
             // create CodeWriter
             String outFileName = args[0];
             if (args[0].contains("\\")) {
-                String[] dir = args[0].split("\\");
-                outFileName = dir[dir.length - 1];
+                outFileName = args[0].substring(args[0].lastIndexOf("\\")+1,args[0].length());
             }
             vmt.code = new CodeWriter(args[0] + "\\" + outFileName, true);
             
