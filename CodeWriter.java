@@ -611,6 +611,8 @@ public class CodeWriter {
             // goto retAddr
             out.write("@retAddr");
             out.newLine();
+            out.write("A = M");
+            out.newLine();
             out.write("0;JMP");
             out.newLine();
         }
