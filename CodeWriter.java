@@ -609,7 +609,10 @@ public class CodeWriter {
             endFrameMinus("LCL", "4");
             
             // goto retAddr
-            writeGoto("retAddr");
+            out.write("@retAddr");
+            out.newLine();
+            out.write("0;JMP");
+            out.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
