@@ -80,11 +80,11 @@ public class VMTranslator {
         if (files != null) {
             // create CodeWriter
             String outFileName = args[0];
-            if (args[0].contains("/")) {
-                String[] dir = args[0].split("/");
+            if (args[0].contains("\\")) {
+                String[] dir = args[0].split("\\");
                 outFileName = dir[dir.length - 1];
             }
-            vmt.code = new CodeWriter(args[0] + "/" + outFileName, true);
+            vmt.code = new CodeWriter(args[0] + "\\" + outFileName, true);
             
             for (File file : files) {
               vmt.parse(file);
