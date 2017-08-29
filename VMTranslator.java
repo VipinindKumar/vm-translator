@@ -95,7 +95,7 @@ public class VMTranslator {
         else {
             // create CodeWriter
             vmt.code = new CodeWriter(args[0], false);
-            vmt.code.setFileName(path);
+            vmt.code.setFileName(path.getPath());
             vmt.parse(path);
         }
         
