@@ -11,7 +11,9 @@ public class CodeWriter {
 
     public BufferedWriter out;
     public String file;
-    public int i = 1;
+    private int i = 1;
+    // for unique labels and goto statements inside a function
+    private String inFunction = "";
 
     /** Open the output file, and
      * get ready to write
@@ -397,7 +399,7 @@ public class CodeWriter {
             writeComment("label " + label);
             
             // Label LABEL
-            out.write("(" + label.toUpperCase() + ")");
+            out.write("(" + inFunction + "$" + label.toUpperCase() + ")");
             out.newLine();
         }
         catch (IOException e) {
@@ -411,7 +413,7 @@ public class CodeWriter {
             writeComment("goto " + label);
             
             // goto LABEL
-            out.write("@" + label.toUpperCase());
+            out.write("@" + inFunction + "$" + label.toUpperCase());
             out.newLine();
             out.write("0;JMP");
             out.newLine();
@@ -437,7 +439,7 @@ public class CodeWriter {
             out.newLine();
 
             // jump to the label, if the value is not equal to 0
-            out.write("@" + label.toUpperCase());
+            out.write("@" + inFunction + "$" + label.toUpperCase());
             out.newLine();
             out.write("D;JNE");
             out.newLine();
@@ -564,6 +566,9 @@ public class CodeWriter {
 
     // Write Assembly code for the return command
     public void writeReturn() {
+        // set inFunction to an empty string
+        inFunction = "";
+        
         try {
             writeComment("return");
             
@@ -648,6 +653,9 @@ public class CodeWriter {
 
     // Write Assembly code for the function command
     public void writeFunction(String funcName, String nLocals) {
+        // set inFunction to funcName
+        inFunction = funcName.toUpperCase();
+        
         try {
             writeComment("function " + funcName + " " + nLocals);
             
