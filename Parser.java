@@ -57,7 +57,7 @@ public class Parser {
                 
                 // trim end of line comments away
                 if (command.contains("//")) {
-                    command = command.split("//")[0];
+                    command = command.split("//")[0].trim();
                 }
                 return true;
             }
