@@ -528,7 +528,10 @@ public class CodeWriter {
             
             
             // goto funcName
-            writeGoto(funcName);
+            out.write("@" + funcName.toUpperCase());
+            out.newLine();
+            out.write("0;JMP");
+            out.newLine();
             
             
             // (returnAddress)
@@ -676,7 +679,7 @@ public class CodeWriter {
             out.newLine();
             
             // while(n > 0)
-            writeLabel(funcName + "$LOOP");
+            writeLabel("LOOP");
             out.write("@n");
             out.newLine();
             out.write("D = M");
@@ -696,10 +699,10 @@ public class CodeWriter {
             out.newLine();
             
             // goto LOOP
-            writeGoto(funcName + "$LOOP");
+            writeGoto("LOOP");
             
             // (END_LOOPi)
-            writeLabel(funcName + "$END_LOOP");
+            writeLabel("END_LOOP");
             
             i++;
         }
