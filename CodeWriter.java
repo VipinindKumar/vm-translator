@@ -44,8 +44,7 @@ public class CodeWriter {
     public void setFileName (String fileName) {
         // if a path
         if (fileName.contains("\\")) {
-            String[] dir = fileName.split("\\");
-            fileName = dir[dir.length - 1];
+            fileName = fileName.substring(fileName.lastIndexOf("\\")+1,fileName.length());
         }
         // if cotains .vm at the end
         if (fileName.contains(".vm")) {
