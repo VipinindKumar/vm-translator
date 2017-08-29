@@ -42,13 +42,17 @@ public class CodeWriter {
     // Informs the codeWriter that
     // the translation of a new file has started
     public void setFileName (String fileName) {
-        if (fileName.contains("/")) {
-            String[] dir = fileName.split("/");
-            file = dir[dir.length - 1];
+        // if a path
+        if (fileName.contains("\\")) {
+            String[] dir = fileName.split("\\");
+            fileName = dir[dir.length - 1];
         }
-        else {
-            file = fileName;
+        // if cotains .vm at the end
+        if (fileName.contains(".vm")) {
+            fileName = fileName.split(".vm")[0];
         }
+        
+        file = fileName;
     }
 
     // write the assembly code for given

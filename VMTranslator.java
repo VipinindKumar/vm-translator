@@ -86,14 +86,16 @@ public class VMTranslator {
             vmt.code = new CodeWriter(args[0] + "\\" + outFileName, true);
             
             for (File file : files) {
-              vmt.parse(file);
+                // set the file name in CodeWriter
+                vmt.code.setFileName(file.getPath());
+                vmt.parse(file);
             }
         }
         // single file
         else {
             // create CodeWriter
             vmt.code = new CodeWriter(args[0], false);
-            
+            vmt.code.setFileName(path);
             vmt.parse(path);
         }
         
