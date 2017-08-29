@@ -668,13 +668,12 @@ public class CodeWriter {
             out.newLine();
             
             // while(n > 0)
-            out.write("(LOOP" + i + ")");
-            out.newLine();
+            writeLabel(funcName + "$LOOP");
             out.write("@n");
             out.newLine();
             out.write("D = M");
             out.newLine();
-            out.write("@END_LOOP" + i);
+            out.write("@" + funcName + "$END_LOOP");
             out.newLine();
             out.write("D;JLE");
             out.newLine();
@@ -689,14 +688,10 @@ public class CodeWriter {
             out.newLine();
             
             // goto LOOP
-            out.write("@LOOP" + i);
-            out.newLine();
-            out.write("0;JMP");
-            out.newLine();
+            writeGoto(funcName + "$LOOP");
             
             // (END_LOOPi)
-            out.write("(END_LOOP" + i + ")");
-            out.newLine();
+            writeLabel(funcName + "$END_LOOP");
             
             i++;
         }
