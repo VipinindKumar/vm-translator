@@ -569,9 +569,6 @@ public class CodeWriter {
 
     // Write Assembly code for the return command
     public void writeReturn() {
-        // set inFunction to an empty string
-        inFunction = "";
-        
         try {
             writeComment("return");
             
