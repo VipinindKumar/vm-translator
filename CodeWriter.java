@@ -673,7 +673,7 @@ public class CodeWriter {
             out.newLine();
             out.write("D = M");
             out.newLine();
-            out.write("@" + funcName + "$END_LOOP");
+            out.write("@" + funcName.toUpperCase() + "$END_LOOP");
             out.newLine();
             out.write("D;JLE");
             out.newLine();
